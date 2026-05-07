@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>   
+    <div id="app">
+        <header>
+            <h1>Timeline Task Manager</h1>
+        
+            <div style="display:flex;gap:10px;align-items:center;">
+                <input type="date" id="datePicker">
+        
+                <button id="toggleAsideBtn" style="width:auto;padding:10px 15px;">
+                    Hide Panel
+                </button>
+            </div>
+        </header>
+        <main>
+            <section id="timelineSection">
+                <div id="timelineContainer">
+                    <div id="timeline">
+                        <div id="gridLayer"></div>
+                        <div id="taskLayer"></div>
+                        <div id="draggerLayer"></div>
+                    </div>
+                </div>
+            </section>
+            <aside id="sidePanel">
+                <h2>Add Task</h2>
+                <form id="taskForm">
+                    <input id="titleInput" placeholder="Task title" required minlength="1"/>
+                    <input id="startInput" type="time" required/>
+                    <input id="endInput" type="time" required/>
+                    <input id="colorInput" type="color" value="#4f8cff">
+                    <button type="submit">Save Task</button>
+                </form>
+                <hr>
+                <h2>Tasks</h2>
+                <div id="taskList"></div>
+            </aside>
+        </main>
+    </div>
+    <div id="modalOverlay" class="modalOverlay hidden">
+        <div class="modalBox">
+            <h2 id="modalTitle">Edit Task</h2>
+
+            <input id="modalTaskTitle" placeholder="Task title">
+            <input id="modalTaskStart" type="time">
+            <input id="modalTaskEnd" type="time">
+
+            <div class="modalActions">
+                <button id="modalCancelBtn">Cancel</button>
+                <button id="modalSaveBtn">Save</button>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

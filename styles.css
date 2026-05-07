@@ -1,0 +1,407 @@
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+            font-family:sans-serif;
+        }
+        body{
+            background:#111;
+            color:white;
+            overflow:hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        #app{
+            height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+        header{
+            height:60px;
+            border-bottom:1px solid #333;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 20px;
+            background:#181818;
+        }
+        main{
+            flex:1;
+            display:flex;
+            overflow:hidden;
+        }
+        #timelineSection{
+            flex:1;
+            margin:1%;
+            overflow:auto;
+            position:relative;
+            background:#0f0f0f;
+        }
+        aside{
+            width:320px;
+            border-left:1px solid #333;
+            padding:20px;
+            overflow:auto;
+            background:#181818;
+        }
+        #timeline{
+            position:relative;
+            width:100%;
+        }
+        .hourLine{
+            position:absolute;
+            left:0;
+            width:100%;
+            border-top:1px solid #222;
+            font-size:11px;
+            color:#888;
+        }
+        .task{
+            position:absolute;
+            right:15%;
+            left:15%;
+            width:70%;
+            border-radius:8px;
+            padding:8px;
+            overflow:hidden;
+            cursor:grab;
+            border-left:5px solid rgba(255,255,255,.3);
+        }
+        .dragger{
+            position:absolute;
+            width:10%;
+            height:4px;
+            background:#ff5252;
+            cursor:ns-resize;
+            z-index:100;
+        }
+        .locked{
+            background:#777;
+        }
+        .lockBtn{
+            position:absolute;
+            left:30%;
+            width:70%;
+            top:4px;
+            margin:0;
+            background:transparent;
+            color:white;
+            border:none;
+            padding:2px 8px;
+            cursor:pointer;
+        }
+        input,
+        button{
+            width:100%;
+            margin-top:10px;
+            padding:10px;
+        }
+        .taskCard{
+            border:1px solid #333;
+            padding:12px;
+            margin-top:10px;
+            border-radius:8px;
+            background:#111;
+        }
+        
+        .taskCardHeader{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+        }
+        
+        .taskCardTitle{
+            font-weight:bold;
+            word-break:break-word;
+        }
+        
+        .taskCardTime{
+            font-size:12px;
+            color:#aaa;
+            margin-top:6px;
+        }
+        
+        .taskActions{
+            display:flex;
+            gap:8px;
+        }
+        
+        .taskActions button{
+            margin:0;
+            width:auto;
+            padding:6px 10px;
+            cursor:pointer;
+        }
+        
+        .editBtn{
+            background:#2f6fff;
+            color:white;
+            border:none;
+        }
+        
+        .deleteBtn{
+            background:#ff4444;
+            color:white;
+            border:none;
+        }
+
+        .modalOverlay{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.6);
+            backdrop-filter:blur(5px);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:9999;
+        }
+
+        .hidden{
+            display:none;
+        }
+
+        .modalBox{
+            width:340px;
+            background:#1c1c1c;
+            border:1px solid #333;
+            border-radius:18px;
+            padding:24px;
+            box-shadow:0 20px 50px rgba(0,0,0,.5);
+            animation:modalIn .18s ease;
+        }
+
+        @keyframes modalIn{
+            from{
+                opacity:0;
+                transform:translateY(10px) scale(.97);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0) scale(1);
+            }
+        }
+
+        .modalBox h2{
+            margin-bottom:18px;
+            font-size:20px;
+        }
+
+        .modalBox input{
+            width:100%;
+            margin-top:12px;
+            padding:12px;
+            border-radius:12px;
+            border:1px solid #333;
+            background:#252525;
+            color:white;
+            outline:none;
+        }
+
+        .modalBox input:focus{
+            border-color:#4f8cff;
+            box-shadow:0 0 0 3px rgba(79,140,255,.2);
+        }
+
+        .modalActions{
+            display:flex;
+            justify-content:flex-end;
+            gap:10px;
+            margin-top:22px;
+        }
+
+        .modalActions button{
+            width:auto;
+            padding:10px 16px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:600;
+        }
+
+        #modalCancelBtn{
+            background:#333;
+            color:white;
+        }
+
+        #modalSaveBtn{
+            background:#4f8cff;
+            color:white;
+        }
+
+        /* HEADER CONTROLS */
+        header h1{
+            font-size:20px;
+            font-weight:600;
+            letter-spacing:.5px;
+        }
+
+        header > div{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        /* DATE PICKER */
+        #datePicker{
+            width:auto;
+            min-width:170px;
+            margin:0;
+            padding:10px 14px;
+            border:none;
+            border-radius:10px;
+            background:#242424;
+            color:#fff;
+            outline:none;
+            font-size:14px;
+            border:1px solid #333;
+            transition:.2s ease;
+        }
+
+        #datePicker:hover{
+            border-color:#555;
+        }
+
+        #datePicker:focus{
+            border-color:#4f8cff;
+            box-shadow:0 0 0 3px rgba(79,140,255,.2);
+        }
+
+        #datePicker::-webkit-calendar-picker-indicator{
+            filter:invert(1);
+            cursor:pointer;
+            opacity:.8;
+        }
+
+        /* TOGGLE BUTTON */
+        #toggleAsideBtn{
+            width:auto !important;
+            margin:0;
+            padding:10px 16px !important;
+            border:none;
+            border-radius:10px;
+            background:#2b2b2b;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:.2s ease;
+            border:1px solid #3a3a3a;
+        }
+
+        #toggleAsideBtn:hover{
+            background:#363636;
+            border-color:#555;
+            transform:translateY(-1px);
+        }
+
+        #toggleAsideBtn:active{
+            transform:scale(.98);
+        }
+
+        /* SIDE PANEL */
+        #sidePanel{
+            width:340px;
+            border-left:1px solid #2d2d2d;
+            padding:22px;
+            overflow:auto;
+            background:#181818;
+            transition:.25s ease;
+        }
+
+        #sidePanel h2{
+            font-size:18px;
+            font-weight:600;
+            margin-bottom:14px;
+            color:#fff;
+        }
+
+        #sidePanel hr{
+            border:none;
+            border-top:1px solid #2c2c2c;
+            margin:22px 0;
+        }
+
+        /* FORM STYLING */
+        #taskForm{
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        #taskForm input,
+        #taskForm button{
+            margin:0;
+        }
+
+        /* TEXT + TIME INPUTS */
+        #taskForm input[type="text"],
+        #taskForm input[type="time"],
+        #taskForm input:not([type="color"]){
+            background:#222;
+            border:1px solid #333;
+            color:white;
+            border-radius:12px;
+            padding:12px 14px;
+            outline:none;
+            transition:.2s ease;
+            font-size:14px;
+        }
+
+        #taskForm input:focus{
+            border-color:#4f8cff;
+            box-shadow:0 0 0 3px rgba(79,140,255,.15);
+        }
+
+        /* COLOR PICKER */
+        #colorInput{
+            height:52px;
+            padding:6px;
+            border:none;
+            border-radius:12px;
+            background:#222;
+            cursor:pointer;
+            border:1px solid #333;
+        }
+
+        /* SAVE BUTTON */
+        #taskForm button{
+            background:linear-gradient(135deg,#4f8cff,#7b5cff);
+            border:none;
+            border-radius:12px;
+            color:white;
+            font-weight:600;
+            padding:13px;
+            cursor:pointer;
+            transition:.2s ease;
+            font-size:14px;
+            letter-spacing:.3px;
+        }
+
+        #taskForm button:hover{
+            transform:translateY(-2px);
+            box-shadow:0 10px 20px rgba(79,140,255,.25);
+        }
+
+        #taskForm button:active{
+            transform:scale(.98);
+        }
+
+        /* SCROLLBAR */
+        #sidePanel::-webkit-scrollbar{
+            width:8px;
+        }
+
+        #sidePanel::-webkit-scrollbar-track{
+            background:#151515;
+        }
+
+        #sidePanel::-webkit-scrollbar-thumb{
+            background:#333;
+            border-radius:10px;
+        }
+
+        #sidePanel::-webkit-scrollbar-thumb:hover{
+            background:#444;
+        }
