@@ -3,7 +3,7 @@
 A modern timeline-based daily task manager and adjuster built with pure HTML, CSS, and JavaScript.
 
 Check Site here:  
-[Timeline Task Manager](https://vinaykatikireddy.github.io/timeline_taskmanager/?utm_source=chatgpt.com)
+[Timeline Task Manager](https://vinaykatikireddy.github.io/timeline_taskmanager/)
 
 ---
 
